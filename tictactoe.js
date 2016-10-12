@@ -3,7 +3,7 @@ console.log('working');
 
 // array for each location on the board from 0 to 8
 //   Indext will correspond with div ids for each sqare
-var gameBoard = ['','','','','','','','','',]
+var board = ['o','x','o','x','o','x','o','o','']
 
 // array for win cases (corresponds with ids for squares - divs)
 var winCases = [[2,4,6],
@@ -21,78 +21,112 @@ var piece = 'x';
 
 // Insert function to capture click event, check valid square clicked and then use to call all other functions
 
-container.addEventListener('click',clickHandler);
+// container.addEventListener('click',clickHandler);
 
+$('.board').on('click',function(event) {
 
-function clickHandler(event) {
+// function clickHandler(event)
 
-  // Capture id of square clicked  (fix up syntax here)
-  var id = eventTarget.id;
+  // Capture id of square clicked  (*** fix up syntax here ***)
+  console.log(event.target);
 
-// If square (gameBoard array index) already has a piece then do nothing
-  if (gameBoard[id] === 'X' || gameBoard[id] === 'O') {
+  // If square (board array index) already has a piece then do nothing
+  // if (board[id] === 'x' || board[id] === 'o') {
+  //   return false;
+  // }
 
-
-
-    return false;
+  // Alternate turns for players - first player uses crosses
+  if (piece === 'x') {
+    piece = 'o'
+    } else {
+    piece = 'x'
   }
 
+  // Clear the board
+  $('.board').empty();
 
-
-// Alternate turns for players
-  if piece === 'X' {
-    piece = 'O'
-    } else {
-    piece = 'X'
+  // Redraw the board
+  for (var i = 0; i < board.length; i++) {
+  $('.board').append( $('<div>').attr('data-index',i).text(board[i]))
   }
 
   //  Call the function that places the piece (per turn) onto board (into array)
-  placePiece(id,turn);
+  // placePiece(id,turn);
 
   //  Call the function that updates display of DOM game board based on X or O
-  updateDomBoard(gameBoard);
+  // updateDomBoard(board);
 
   //  Call the function that checks to see if a winner and announces who the winner is
-  checkForWinner(gameBoard);
+  // checkForWinner(board);
 
+})
+
+var winner = ''
+
+// Check for winner, tie or false unfinished
+// function checkForWinner(board) {
+for (var i = 0; i < winCases.length; i++) {
+  if (board[(winCases[i][0])] === 'x' &&
+      board[(winCases[i][1])] === 'x' &&
+      board[(winCases[i][2])] === 'x') {
+         var winnner = 'x';
+         console.log('Winner is X');
+     } if (board[(winCases[i][0])] === 'o' &&
+          board[(winCases[i][1])] === 'o' &&
+          board[(winCases[i][2])] === 'o') {
+            var winner = 'o';
+            console.log('Winner is O');
+          } else {
+            console.log('')
+      }
+  }
+
+// Determine if a Tie  *** NEEDS MORE WORK  ***
+// if (board.indexOf('') === -1) && winner !== "") {
+//         console.log('TIE !!');
+//   }
+
+
+
+
+// Draw board for the first time
+for (var i = 0; i < board.length; i++) {
+  $('.board').append( $('<div>').attr('data-index',i).text(board[i]))
 }
 
 
+// } if (board.indexOf('') === -1) {
+//       console.log('TIE !!');
+//   } else {
+//     console.log("Now Result Yet");
+//   }
+// }
+//
 
 // Function to take clicked (square) id and place piece on the board
-function placePiece(id,piece) {
+// function placePiece(id,piece) {
 
-  // Update gameBoard array (source of truth) - note: array index is same as id for squares)
-  gameBoard[id] = piece;
-  return true;
-}
+  // Update Board array (source of truth) - note: array index is same as id for squares)
+// board[id] = piece;
+//   return true;
+// }
 
 
 // Function to update display of DOM game board based on X or O
-function updateDomBoard(gameBoard) {
-   for (i = 0; i < gameBoard.length; i++)
-      if (gameBoard[i] === 'X') {
-        // set class of square to display X icon / img
-      } if (gameBoard[i] === 'O') {
-        // set class of square to display O icon / img
-      } else {
-        // set class of square[i] to diplay default background / img (tbd)
-      }
-    return true;
-}
+// function updateDomBoard(gameBoard) {
+//    for (i = 0; i < gameBoard.length; i++)
+//       if (gameBoard[i] === 'x') {
+//         // set class of square to display X icon / img
+//       } if (gameBoard[i] === 'o') {
+//         // set class of square to display O icon / img
+//       } else {
+//         // set class of square[i] to diplay default background / img (tbd)
+//       }
+//     return true;
+// }
 
 //  Function that checks to see if a winner and announces the result accordingly
   // function checkForWinner(gameBoard) {
-  //   for (i = 0; i < gameBoard.length; i++)
-    // test if X indices in gameBoard[i] match indexes of any of the winCases arrays
-
-    for (var i = 0; i < winCases.length; i++) {
-      for (var j = 1; j winCases[0][0].length; j++) {
-        if (gameBoard[(winCases[i][j])].value === 'X' &&
-            gameBoard[(winCases[i][j])].value === 'X' &&
-            gameBoard[(winCases[i][j])].value === 'X')
-      }
-    }
 
 
     // if true then display message congratulating the X player as the winner
@@ -112,22 +146,10 @@ function updateDomBoard(gameBoard) {
 
 
 
-//  DT - go in - do update - then redraw the board from scratch
-var board = ['x','','','x','','','o','',''];
 
-$('.board').on('click',function(event) {
+// ************************
 
-  // update move
-  console.log(event.target)
 
-// redraw
-$('.board').empty();
+// Need to cater for TIE outcome when all cells have either an 'x' or an 'o'
 
-for (var x = 0; x < board.length; x++) {
-  $('.board').append( $('<div>').attr('data-index',x).text(board[x]))
-}
-})
-// draw board for the first time
-for (var x = 0; x < board.length; x++) {
-  $('.board').append( $('<div>').attr('data-index',x).text(board[x]))
-}
+// Check if a tie
