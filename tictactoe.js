@@ -3,21 +3,21 @@ console.log('working');
 
 // array for each location on the board from 0 to 8
 //   Indext will correspond with div ids for each sqare
-var gameBoard = []
+var gameBoard = ['','','','','','','','','',]
 
 // array for win cases (corresponds with ids for squares - divs)
-var winCases = [[0,1,2],
+var winCases = [[2,4,6],
+                [0,4,8],
+                [0,1,2],
                 [3,4,5],
                 [6,7,8],
                 [0,3,6],
                 [1,4,7],
-                [2,5,8],
-                [0,4,8],
-                [2,4,6]
+                [2,5,8]
                ]
 
 // Set default (first turn) piece to 'X'
-var piece = 'X';
+var piece = 'x';
 
 // Insert function to capture click event, check valid square clicked and then use to call all other functions
 
@@ -26,11 +26,14 @@ container.addEventListener('click',clickHandler);
 
 function clickHandler(event) {
 
-  // Capture id of square clicked
+  // Capture id of square clicked  (fix up syntax here)
   var id = eventTarget.id;
 
 // If square (gameBoard array index) already has a piece then do nothing
   if (gameBoard[id] === 'X' || gameBoard[id] === 'O') {
+
+
+
     return false;
   }
 
@@ -83,6 +86,15 @@ function updateDomBoard(gameBoard) {
   //   for (i = 0; i < gameBoard.length; i++)
     // test if X indices in gameBoard[i] match indexes of any of the winCases arrays
 
+    for (var i = 0; i < winCases.length; i++) {
+      for (var j = 1; j winCases[0][0].length; j++) {
+        if (gameBoard[(winCases[i][j])].value === 'X' &&
+            gameBoard[(winCases[i][j])].value === 'X' &&
+            gameBoard[(winCases[i][j])].value === 'X')
+      }
+    }
+
+
     // if true then display message congratulating the X player as the winner
     // and change the appearance of the squares that match the win case
 
@@ -97,3 +109,25 @@ function updateDomBoard(gameBoard) {
 
 
 // Function to reset (refresh) triggered by button click (consider img call with empty href to force refresh?)
+
+
+
+//  DT - go in - do update - then redraw the board from scratch
+var board = ['x','','','x','','','o','',''];
+
+$('.board').on('click',function(event) {
+
+  // update move
+  console.log(event.target)
+
+// redraw
+$('.board').empty();
+
+for (var x = 0; x < board.length; x++) {
+  $('.board').append( $('<div>').attr('data-index',x).text(board[x]))
+}
+})
+// draw board for the first time
+for (var x = 0; x < board.length; x++) {
+  $('.board').append( $('<div>').attr('data-index',x).text(board[x]))
+}
