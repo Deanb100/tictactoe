@@ -15,21 +15,24 @@
 var board = ['','','','','','','','','']
 
 // Array for win case positions (corresponds with ids for squares - divs)
-var winCases = [[2,4,6],
+var winCases = [[2,5,8],
                 [0,4,8],
-                [0,1,2],
+                [2,4,6],
                 [3,4,5],
                 [6,7,8],
                 [0,3,6],
                 [1,4,7],
-                [2,5,8]
+                [0,1,2]
                ]
 
 // Set default (first turn) piece to 'X'
 var piece = 'x';
 
-// Capture click event
+// Reset value of win counts to zero prior to browser refresh
+var xWinCount = 0;
+var oWinCount = 0;
 
+// Capture click event
 $('.board').on('click',function(event) {
 
   console.log(event.target.getAttribute('data-index'));
@@ -58,6 +61,7 @@ $('.board').on('click',function(event) {
   //  Call the function that checks to determine if any winners, tie or next turn
   checkForWinner();
 
+
 })
 
 
@@ -67,21 +71,30 @@ function checkForWinner() {
     if (checkOneCase('x', i)) {
       var outcome = 'X Wins!';
       document.getElementById('messageDisplay').innerHTML = outcome;
+      document.getElementById('hOneTag').style.color = "#239B56";
+      document.getElementById('messageDisplay').style.color = "#239B56";
+      document.body.style.backgroundColor = "#82E0AA";
+      xWinCount = xWinCount + 1;
+      console.log('Games Won by X = ' + xWinCount);
       break;
     } else if (checkOneCase('o', i)) {
       outcome = 'O Wins!';
       document.getElementById('messageDisplay').innerHTML = outcome;
+      document.getElementById('hOneTag').style.color = "#D68910";
+      document.getElementById('messageDisplay').style.color = "#D68910";
+      document.body.style.backgroundColor = "#FAD7A0";
+      var xWinCount = oWinCount + 1;
       break;
-    } else if (board.indexOf('') === -1) {
-      outcome = 'A TIE - Have another go!';
-      document.getElementById('messageDisplay').innerHTML = outcome;
-      break;
-    } else {
+    } else if (countInArray(board,'x') + countInArray(board,'o') < board.length) {
       outcome = 'Next turn...';
+      document.getElementById('messageDisplay').innerHTML = outcome;
+    } else { outcome = 'A TIE - Have another go!';
       document.getElementById('messageDisplay').innerHTML = outcome;
     }
   }
 }
+
+
 
 // Function to check if there are matches in the board array with one of the 8 win cases
 function checkOneCase(token, i) {
@@ -89,13 +102,35 @@ function checkOneCase(token, i) {
   return result;
 }
 
-// Draw the board for the first time
+// Function to count the number of turns / clicks on cell tokens by counting number of x & o tokens in the board array
+
+function countInArray(array,token) {
+    var count = 0;
+    for (var i = 0; i < board.length; i++) {
+        if (board[i] === token) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// document.getElementById("resetButton").onclick = function() { emptyBoardArray(); };
+//
+//
+//
+//
+//
+// // Clear the board ready for redraw
+// // There is button with id = resetButton in the html to reset game - by refreshing browser page
+//
+// function emptyBoardArray() {
+//   board = ['','','','','','','','',''];
+// }
+//
+
+
+
+// Draw the board for the first time (uses jquery)
 for (var i = 0; i < board.length; i++) {
   $('.board').append( $('<div>').attr('data-index',i).text(board[i]))
 }
-
-
-// Function to reset (refresh) triggered by button click (consider img call with empty href to force refresh?)
-
-// Clear the board ready for redraw
-// There is button with id = resetButton in the html to reset game - by refreshing browser page

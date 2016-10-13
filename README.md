@@ -6,9 +6,11 @@ Traditional tic tac toe game for two players to be played in a modern browser
 
 Developer: Dean Birznieks  deanb100@gmail.com
 
-Version: Under Development v1.0
+Version: Under Development v1.1 ()
 
-Last Updated: 13 October 2016
+Last Updated: 14 October 2016
+
+Last Change: Enhancements re checkForWinner function after further testing and changing background-color etc. to highlight a victory .
 
 Tic Tac Toe Game in Javascript - with some use of jquery
 
@@ -21,4 +23,3 @@ Overview:
    - This involves the win cases (array) being compared to the board (array) for possible matches / outcomes
    - If there has been no win and all 9 cells have been selected by a user then the outcome is a Tie.
    - A button is provided to start a new game (refresh the browser page)
-
