@@ -1,12 +1,20 @@
-console.log('working');
+// Tic Tac Toe Game in Javascript - with some use of jquery
+//
+// Approach:
+//    - Game board is drawn on the fly via jquery methods - creating 9 cells as divs with a unique id and data-index
+//    - Users click on the 9 cells of the board to position their X or O
+//    - User selections are captured via jquery click method and stored in a one dimensional array - 'board'
+//    - There are 8 possible combinations of three cells that are possible win cases - these are stored in 2 dimensional array 'winCases'
+//    - After each turn the program redraws the board and checks for an outcome - winner, tie or continue with next move
+//    - This involves the win cases (array) being compared to the board (array) for possible matches / outcomes
+//    - If there has been no win and all 9 cells have been selected by a user then the outcome is a Tie.
+//    - A button is provided to start a new game (refresh the browser page)
 
+// Array for each location on the board from 0 to 8
+// Used to store x and o for display on board
+var board = ['','','','','','','','','']
 
-
-// array for each location on the board from 0 to 8
-//   Indext will correspond with div ids for each sqare
-var board = ['o','x','o','x','o','x','x','o','o']
-
-// array for win cases (corresponds with ids for squares - divs)
+// Array for win case positions (corresponds with ids for squares - divs)
 var winCases = [[2,4,6],
                 [0,4,8],
                 [0,1,2],
@@ -20,55 +28,40 @@ var winCases = [[2,4,6],
 // Set default (first turn) piece to 'X'
 var piece = 'x';
 
-// Insert function to capture click event, check valid square clicked and then use to call all other functions
-
-// container.addEventListener('click',clickHandler);
+// Capture click event
 
 $('.board').on('click',function(event) {
 
-// function clickHandler(event)
+  console.log(event.target.getAttribute('data-index'));
+  var indexClicked = event.target.getAttribute('data-index');
+  board[indexClicked]=piece;
 
-  // Capture id of square clicked  (*** fix up syntax here ***)
+
+  // For debugging purposes - this logs the cell clicked including the data attribute and current value
   console.log(event.target);
 
-  // If square (board array index) already has a piece then do nothing
-  // if (board[id] === 'x' || board[id] === 'o') {
-  //   return false;
-  // }
-
-  // Alternate turns for players - first player uses crosses
+  // Alternate turns for players - first player uses x
   if (piece === 'x') {
     piece = 'o'
     } else {
     piece = 'x'
   }
 
-  // Clear the board
+  // Clear the board ready for redraw
   $('.board').empty();
 
-  // Redraw the board
+  // Redraw the board (after each move) appending 9 divs to a the board container
   for (var i = 0; i < board.length; i++) {
   $('.board').append( $('<div>').attr('data-index',i).text(board[i]))
   }
 
-  //  Call the function that places the piece (per turn) onto board (into array)
-  // placePiece(id,turn);
-
-  //  Call the function that updates display of DOM game board based on X or O
-  // updateDomBoard(board);
-
-  //  Call the function that checks to see if a winner and announces who the winner is
+  //  Call the function that checks to determine if any winners, tie or next turn
   checkForWinner();
-
-  document.getElementById('messageDisplay').innerHTML = outcome;
-
-
 
 })
 
 
-// Check for winner, tie or false unfinished
-// function checkForWinner(board) {
+// Check for winner, tie or next turn and display outcome to user
 function checkForWinner() {
   for (var i = 0; i < winCases.length; i++) {
     if (checkOneCase('x', i)) {
@@ -77,63 +70,32 @@ function checkForWinner() {
       break;
     } else if (checkOneCase('o', i)) {
       outcome = 'O Wins!';
-      console.log(outcome);
+      document.getElementById('messageDisplay').innerHTML = outcome;
       break;
     } else if (board.indexOf('') === -1) {
       outcome = 'A TIE - Have another go!';
-      console.log(outcome);
+      document.getElementById('messageDisplay').innerHTML = outcome;
       break;
     } else {
       outcome = 'Next turn...';
-      console.log(outcome);
+      document.getElementById('messageDisplay').innerHTML = outcome;
     }
   }
 }
 
+// Function to check if there are matches in the board array with one of the 8 win cases
 function checkOneCase(token, i) {
   var result = board[(winCases[i][0])] === token && board[(winCases[i][1])] === token && board[(winCases[i][2])] === token
   return result;
 }
 
-
-// Draw board for the first time
+// Draw the board for the first time
 for (var i = 0; i < board.length; i++) {
   $('.board').append( $('<div>').attr('data-index',i).text(board[i]))
 }
 
 
-// } if (board.indexOf('') === -1) {
-//       console.log('TIE !!');
-//   } else {
-//     console.log("Now Result Yet");
-//   }
-// }
-//
-
-// Function to take clicked (square) id and place piece on the board
-// function placePiece(id,piece) {
-
-  // Update Board array (source of truth) - note: array index is same as id for squares)
-// board[id] = piece;
-//   return true;
-// }
-
-
-// Function to update display of DOM game board based on X or O
-// function updateDomBoard(gameBoard) {
-//    for (i = 0; i < gameBoard.length; i++)
-//       if (gameBoard[i] === 'x') {
-//         // set class of square to display X icon / img
-//       } if (gameBoard[i] === 'o') {
-//         // set class of square to display O icon / img
-//       } else {
-//         // set class of square[i] to diplay default background / img (tbd)
-//       }
-//     return true;
-// }
-
-
-
-
-
 // Function to reset (refresh) triggered by button click (consider img call with empty href to force refresh?)
+
+// Clear the board ready for redraw
+// There is button with id = resetButton in the html to reset game - by refreshing browser page
