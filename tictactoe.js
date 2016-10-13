@@ -1,9 +1,10 @@
 console.log('working');
 
 
+
 // array for each location on the board from 0 to 8
 //   Indext will correspond with div ids for each sqare
-var board = ['o','x','o','x','o','x','o','o','']
+var board = ['o','x','o','x','o','x','x','o','o']
 
 // array for win cases (corresponds with ids for squares - divs)
 var winCases = [[2,4,6],
@@ -57,36 +58,42 @@ $('.board').on('click',function(event) {
   // updateDomBoard(board);
 
   //  Call the function that checks to see if a winner and announces who the winner is
-  // checkForWinner(board);
+  checkForWinner();
+
+  document.getElementById('messageDisplay').innerHTML = outcome;
+
+
 
 })
 
-var winner = ''
 
 // Check for winner, tie or false unfinished
 // function checkForWinner(board) {
-for (var i = 0; i < winCases.length; i++) {
-  if (board[(winCases[i][0])] === 'x' &&
-      board[(winCases[i][1])] === 'x' &&
-      board[(winCases[i][2])] === 'x') {
-         var winnner = 'x';
-         console.log('Winner is X');
-     } if (board[(winCases[i][0])] === 'o' &&
-          board[(winCases[i][1])] === 'o' &&
-          board[(winCases[i][2])] === 'o') {
-            var winner = 'o';
-            console.log('Winner is O');
-          } else {
-            console.log('')
-      }
+function checkForWinner() {
+  for (var i = 0; i < winCases.length; i++) {
+    if (checkOneCase('x', i)) {
+      var outcome = 'X Wins!';
+      document.getElementById('messageDisplay').innerHTML = outcome;
+      break;
+    } else if (checkOneCase('o', i)) {
+      outcome = 'O Wins!';
+      console.log(outcome);
+      break;
+    } else if (board.indexOf('') === -1) {
+      outcome = 'A TIE - Have another go!';
+      console.log(outcome);
+      break;
+    } else {
+      outcome = 'Next turn...';
+      console.log(outcome);
+    }
   }
+}
 
-// Determine if a Tie  *** NEEDS MORE WORK  ***
-// if (board.indexOf('') === -1) && winner !== "") {
-//         console.log('TIE !!');
-//   }
-
-
+function checkOneCase(token, i) {
+  var result = board[(winCases[i][0])] === token && board[(winCases[i][1])] === token && board[(winCases[i][2])] === token
+  return result;
+}
 
 
 // Draw board for the first time
@@ -125,31 +132,8 @@ for (var i = 0; i < board.length; i++) {
 //     return true;
 // }
 
-//  Function that checks to see if a winner and announces the result accordingly
-  // function checkForWinner(gameBoard) {
 
-
-    // if true then display message congratulating the X player as the winner
-    // and change the appearance of the squares that match the win case
-
-    // else check if 'O' indices in gameBoard[i] match indexes of any of the winCases arrays
-
-    // if true then display message congratulating the 'O' player as the winner
-
-    // else return false
-
-  // }
 
 
 
 // Function to reset (refresh) triggered by button click (consider img call with empty href to force refresh?)
-
-
-
-
-// ************************
-
-
-// Need to cater for TIE outcome when all cells have either an 'x' or an 'o'
-
-// Check if a tie
