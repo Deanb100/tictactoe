@@ -62,3 +62,63 @@ h1 {
   border-color: #40c4ff;
   font-size: 1em;
 }
+
+/*Styles to highlight game win by 'x' player - covers message display*/
+#messageDisplay.xWinStyleMessages, .xWinStyleMessages {
+  color: #239B56;
+}
+
+/*Styles to highlight game win by 'x' player - covers h1 display*/
+.xWinStyleH1 {
+  color: #239B56;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-size: 3em;
+  padding: 5px;
+  font-weight: normal;
+}
+
+/*Styles to highlight game win by 'x' player - covers message display*/
+.xWinStyleBody {
+  background-color: #82E0AA;
+  font-family: arial;
+  text-align: center;
+}
+
+/*Styles to highlight game win by 'o' player - covers message display*/
+#messageDisplay.oWinStyleMessages, .oWinStyleMessages {
+  color: #D68910;
+}
+
+/*Styles to highlight game win by 'o' player - covers h1 display*/
+.oWinStyleH1 {
+  color: #D68910;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-size: 3em;
+  padding: 5px;
+  font-weight: normal;
+}
+
+/*Styles to highlight game win by 'o' player - covers body display*/
+.oWinStyleBody {
+  background-color: #FAD7A0;
+  font-family: arial;
+  text-align: center;
+}
+
+#scoreboardX {
+  margin-bottom: 20px;
+  margin-right: 20px;
+  color: #239B56;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+#scoreboardO {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  color: #D68910;
+  font-size: 1em;
+  font-weight: bold;
+}
